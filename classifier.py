@@ -1,5 +1,9 @@
 import re
+from pathlib import Path
+
 from taxonomy import JOB_TAXONOMY
+
+BASE_DIR = Path(__file__).resolve().parent
 
 def save_report(result, output_path="report.txt"):
     with open(output_path, "w", encoding="utf-8") as f:
@@ -84,7 +88,8 @@ def classify_job(jd_text):
 
 
 if __name__ == "__main__":
-    with open("sample_jd.txt", "r", encoding="utf-8") as f:
+    sample_path = BASE_DIR / "sample_jd.txt"
+    with open(sample_path, "r", encoding="utf-8") as f:
         jd_text = f.read()
 
     result = classify_job(jd_text)
@@ -94,5 +99,5 @@ if __name__ == "__main__":
     print("详细得分:", result["detail_scores"])
     print("方向占比:", result["proportions"])
 
-    save_report(result)
+    save_report(result, str(BASE_DIR / "report.txt"))
     print("报告已保存到 report.txt")

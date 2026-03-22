@@ -1,4 +1,10 @@
-def read_file(path):
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+
+
+def read_file(name: str) -> str:
+    path = BASE_DIR / name
     with open(path, "r", encoding="utf-8") as f:
         return f.read()
 
@@ -76,11 +82,11 @@ def main():
     print(format_keywords(missing_keywords))
 
     save_report(
-        "output.txt",
+        str(BASE_DIR / "output.txt"),
         resume_keywords,
         jd_keywords,
         matched_keywords,
-        missing_keywords
+        missing_keywords,
     )
 
     print("\nReport saved to output.txt")

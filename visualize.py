@@ -1,6 +1,13 @@
+import matplotlib
+
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+from pathlib import Path
+
 from classifier import classify_job
+
+BASE_DIR = Path(__file__).resolve().parent
 
 
 def plot_radar(scores, output_path="radar_chart.png"):
@@ -32,22 +39,18 @@ def plot_radar(scores, output_path="radar_chart.png"):
     # 自动调整布局
     plt.tight_layout()
 
-    # 保存图片
+    # 保存图片（使用 Agg 后端，不依赖弹窗显示）
     plt.savefig(output_path)
-
-    # 显示图表
-    plt.show()
+    plt.close(fig)
 
 
 if __name__ == "__main__":
-    # 读取 JD 文件
-    with open("sample_jd.txt", "r", encoding="utf-8") as f:
+    sample_path = BASE_DIR / "sample_jd.txt"
+    with open(sample_path, "r", encoding="utf-8") as f:
         jd_text = f.read()
 
-    # 分类
     result = classify_job(jd_text)
 
-    # 终端输出
     print("识别结果:", result["primary_direction"])
     print("置信度:", result["confidence"])
     print("详细得分:", result["detail_scores"])
@@ -57,7 +60,7 @@ if __name__ == "__main__":
         for category, ratio in result["proportions"].items():
             print(f"{category}: {ratio:.0%}")
 
-    # 绘图并保存
-    plot_radar(result["detail_scores"])
+    out_png = BASE_DIR / "radar_chart.png"
+    plot_radar(result["detail_scores"], str(out_png))
 
-    print("雷达图已保存到 radar_chart.png")
+    print(f"雷达图已保存到 {out_png}")
