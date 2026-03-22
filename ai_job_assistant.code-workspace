@@ -1,0 +1,13 @@
+{
+  "folders": [
+    {
+      "path": ".",
+      "name": "AI Job Assistant · 招聘 JD 筛选"
+    }
+  ],
+  "settings": {
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 400,
+    "files.hotExit": "onExitAndWindowClose"
+  }
+}

@@ -6,3 +6,9 @@ __pycache__/
 venv/
 ENV/
 .DS_Store
+Thumbs.db
+
+# 运行生成的报告与图（需要时可删掉下面三行并提交示例）
+report.txt
+output.txt
+radar_chart.png
